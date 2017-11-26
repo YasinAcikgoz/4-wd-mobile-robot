@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name="yacikgoz.com.undergraduateproject.DrawerActivity"
-            android:label="@string/app_name">
+        android:screenOrientation="landscape"
+        android:label="@string/app_name">
 
         </activity>
     </application>

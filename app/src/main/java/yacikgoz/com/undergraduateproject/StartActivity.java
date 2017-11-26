@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -28,6 +30,7 @@ public class StartActivity extends Activity implements View.OnClickListener{
 
     public static Socket socket;
     public static PrintWriter printWriter_socket;
+    public static BufferedReader in;
     volatile boolean isConnected = false;
     EditText ipTxt, portTxt;
     Button btn, btn2;
@@ -128,6 +131,8 @@ public class StartActivity extends Activity implements View.OnClickListener{
                             socket = new Socket(ipTxt.getText().toString(), Integer.parseInt(portTxt.getText().toString()));
                             if(socket.isConnected()) {
                                 printWriter_socket = new PrintWriter(socket.getOutputStream());
+                                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
                                 isConnected = true;
                             } else{
                                 Toast.makeText(StartActivity.this, "Yanlış IP veya Port Numarası!!!", Toast.LENGTH_SHORT).show();
