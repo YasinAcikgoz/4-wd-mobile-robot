@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:weightSum="5">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:weightSum="5">
 
     <EditText
         android:id="@+id/ip_text"
@@ -12,7 +13,8 @@
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="IP Address"
-        android:inputType="textPersonName"/>
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:id="@+id/port_text"
@@ -20,14 +22,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
+        android:focusable="auto"
+        android:focusedByDefault="true"
         android:hint="Port"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:textColor="@color/colorPrimaryDark" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Button"/>
+        android:background="@drawable/button_style"
+        android:text="Connect!"
+        android:textColor="@color/colorPrimary" />
 
 </LinearLayout>

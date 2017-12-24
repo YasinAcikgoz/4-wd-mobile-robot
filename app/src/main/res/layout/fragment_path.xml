@@ -4,12 +4,71 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:weightSum="9">
-
-
-    <yacikgoz.com.undergraduateproject.PathView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:id="@+id/path_view"/>
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="end"
+        android:weightSum="2">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <ImageButton
+                android:id="@+id/play_btn"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/play"
+                android:background="@null"
+                />
+            <ImageButton
+                android:id="@+id/pause_btn"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/stop"
+                android:background="@null"
+                />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="end"
+            android:layout_weight="1">
+
+
+            <ImageButton
+                android:id="@+id/forward_btn"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/forward"
+                android:background="@null"
+                />
+            <ImageButton
+                android:id="@+id/reverse_btn"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/reverse"
+                android:background="@null"
+                />
+        </FrameLayout>
+
+
+    </LinearLayout>
 
 </LinearLayout>

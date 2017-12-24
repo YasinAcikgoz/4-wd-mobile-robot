@@ -2,13 +2,22 @@ package yacikgoz.com.undergraduateproject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,26 +30,35 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+import static yacikgoz.com.undergraduateproject.DrawerActivity.data;
+import static yacikgoz.com.undergraduateproject.DrawerActivity.direction;
+import static yacikgoz.com.undergraduateproject.DrawerActivity.stop;
+
 /**
  *
  * Created by yacikgoz on 23.11.2017.
  */
 
-public class StartActivity extends Activity implements View.OnClickListener{
+public class StartActivity extends Activity  implements View.OnClickListener{
 
     public static Socket socket;
     public static PrintWriter printWriter_socket;
     public static BufferedReader in;
     volatile boolean isConnected = false;
+    public static boolean isRunning =false;
     EditText ipTxt, portTxt;
     Button btn, btn2;
-    String ip;
+    public static String ip;
+    public static int port;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         int a;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ipTxt = findViewById(R.id.ip_text);
         portTxt = findViewById(R.id.port_text);
         btn = findViewById(R.id.button);
@@ -55,6 +73,7 @@ public class StartActivity extends Activity implements View.OnClickListener{
         }
 
     }
+
     public static String getIpAddress() {
         try {
             for (Enumeration en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
@@ -128,14 +147,28 @@ public class StartActivity extends Activity implements View.OnClickListener{
                     @Override
                     public void run() {
                         try {
-                            socket = new Socket(ipTxt.getText().toString(), Integer.parseInt(portTxt.getText().toString()));
+                            port = Integer.parseInt(portTxt.getText().toString());
+                            ip = ipTxt.getText().toString();
+                            socket = new Socket(ip, port);
                             if(socket.isConnected()) {
                                 printWriter_socket = new PrintWriter(socket.getOutputStream());
                                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(StartActivity.socket != null && StartActivity.socket.isConnected()){
+                                            DrawerActivity.receiveDataFromServer(getApplicationContext());
+                                           // isRunning = true;
 
+                                        } else{
+                                            Toast.makeText(StartActivity.this, "socket error", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }).start();
                                 isConnected = true;
                             } else{
                                 Toast.makeText(StartActivity.this, "Yanlış IP veya Port Numarası!!!", Toast.LENGTH_SHORT).show();
+                                System.out.println("------- yanlış ip veya port");
                             }
 
 
@@ -166,4 +199,6 @@ public class StartActivity extends Activity implements View.OnClickListener{
             super.onCancelled(result);
         }
     }
+
+
 }
