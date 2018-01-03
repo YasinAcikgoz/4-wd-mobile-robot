@@ -47,21 +47,20 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onStart() {
         super.onStart();
+        if(isAdded())
         getSpeed.execute();
-        Toast.makeText(getActivity(), "start", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(getActivity(), "resume", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getSpeed.cancel(true);
-        Toast.makeText(getActivity(), "pause", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -147,8 +146,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     class GetSpeed extends AsyncTask<String, String, String>{
         @Override
         protected String doInBackground(String... strings) {
-            while(!this.isCancelled()){
-                if(DrawerActivity.stop == 1 && isAdded()){
+            try {
+                while (!this.isCancelled()) {
+                    if (DrawerActivity.stop == 1 && isAdded()) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -156,17 +156,30 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                                 sRF.speedTo((float) vRF);
                                 sLR.speedTo((float) vLR);
                                 sRR.speedTo((float) vRR);
-                                System.out.println("/////////////////v1: " + vLF + " v2: " + vRF + " v3: " + vLR + " v4 " + vRR);
+                                System.out.println("++++++++++++++++v1: " + vLF + " v2: " + vRF + " v3: " + vLR + " v4 " + vRR);
                             }
                         });
-                        try {
-                            Thread.sleep(200);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
 
+                    } else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sLF.speedTo(0);
+                                sRF.speedTo(0);
+                                sLR.speedTo(0);
+                                sRR.speedTo(0);
+                                System.out.println("stop");
+                            }
+                        });
+                    }
+                    Thread.sleep(duration);
                 }
             }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
             return null;
         }
     }

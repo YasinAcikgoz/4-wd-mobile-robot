@@ -1,30 +1,54 @@
 package yacikgoz.com.undergraduateproject;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
 /**
  *
  * Created by yacikgoz on 11.11.2017.
  */
-
 public class PathFragment extends Fragment  implements View.OnClickListener{
     View v;
 
     ImageButton playBtn,  pauseBtn, forwardBtn, reverseBtn;
+    LineChart mChart;
+
+    private static final String STATE_PLOT = "statePlot";
+    PathView pathView;
+    public static int w,  h;
+
+
+    private MockDataGenerator mMockDataGenerator;
+    private MyPath myPath;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_path, container, false);
-        initilize();
 
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        w = display.getWidth();  // deprecated
+        h = display.getHeight();  // deprecated
+        myPath = new MyPath(250,500f);
 
-        return v;
+        PathView pathView = new PathView(container.getContext());
+        pathView.setPath(myPath);
+
+        return pathView;
     }
 
 
@@ -93,4 +117,27 @@ public class PathFragment extends Fragment  implements View.OnClickListener{
             reverseBtn.setVisibility(View.INVISIBLE);
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+       // outState.putSerializable(STATE_PLOT, myPath);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mMockDataGenerator = new MockDataGenerator(myPath);
+        mMockDataGenerator.start();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        mMockDataGenerator.quit();
+    }
+
 }

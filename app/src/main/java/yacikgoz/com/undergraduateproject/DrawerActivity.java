@@ -29,7 +29,8 @@ public class DrawerActivity extends AppCompatActivity implements SensorEventList
     Context context;
 
     public static int data, direction = 0, stop = 0;
-    public static double vLR, vRR, vLF, vRF;
+    public static double vLR, vRR, vLF, vRF, vtR, vtL;
+    public static  float vox, voy;
     public static double pls1 =0, pls2=0, pls3 = 0, pls4 = 0, plsLF = 0, plsRF = 0, plsLR = 0, plsRR = 0;
     public static String message = "";
     public static Activity activity = null;
@@ -114,9 +115,9 @@ public class DrawerActivity extends AppCompatActivity implements SensorEventList
     }
 
 
-    public static void receiveDataFromServer(final Context context) {
+    public static void receiveDataFromServer() {
         int count = 0;
-
+        int dx = 0, dy=1;
         try {
             int charsRead;
             char[] buffer = new char[20];
@@ -134,7 +135,7 @@ public class DrawerActivity extends AppCompatActivity implements SensorEventList
 
                             //onBackPressed();
                             break;
-                        } else {
+                        } else if(stop == 1){
                             String[] arr = message.split("_");
                            /* for(String s: arr)
                                 System.out.print(s + " ");*/
@@ -150,10 +151,41 @@ public class DrawerActivity extends AppCompatActivity implements SensorEventList
                                 plsLR += pls3;
                                 plsRR += pls4;
                                 if(count >= 5){
-                                    vLF = plsLF*0.02;
-                                    vRF = plsRF*0.02;
-                                    vLR = plsLR*0.03;
-                                    vRR = plsRR*0.03;
+                                    vLF = Math.abs(plsLF*0.009);
+                                    vRF = Math.abs(plsRR*0.009);
+                                    vLR = Math.abs(plsLR*0.00675);
+                                    vRR = Math.abs(plsRR*0.009);
+                                    double vtR = vRF + vRR;
+                                    double vtL = vLF + vLR;
+                                    int icrx = 1;
+                                    if(data > 10 && data < 20 ){
+
+                                        System.out.println("sag");
+                                        dx = 4;
+                                        icrx = ((data-10)/10);
+                                    }
+                                    else if(data > 20 && data < 30 ){
+                                        System.out.println("sol");
+                                        dx = 2;
+                                        icrx = ((data-20)/10);
+                                    }
+
+                                    if(vtL > vtR){
+                                        voy = -(float) (vtR + vtL)/2;
+                                        vox = (float) (icrx * (vtL - vtR));
+                                    } else{
+                                        voy = (float) (vtR + vtL)/2;
+                                        vox = -(float) (icrx * (vtR - vtL));
+                                    }
+                                    if(vox <0){
+
+                                    //    vox -= PathFragment.w;
+                                    }
+                                    if(voy <0){
+                                    //    voy -= PathFragment.h;
+                                    }
+                                    System.out.println("icrx: " + icrx + " vox: " + vox + " voy: " + voy );
+                                    System.out.println("-------- data: " + data);
                                     plsLF = 0;
                                     plsRF = 0;
                                     plsLR = 0;

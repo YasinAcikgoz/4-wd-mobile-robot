@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.github.anastr.speedviewlib.ProgressiveGauge;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -50,6 +51,7 @@ public class StartActivity extends Activity  implements View.OnClickListener{
     Button btn, btn2;
     public static String ip;
     public static int port;
+    ProgressiveGauge sLF;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,8 @@ public class StartActivity extends Activity  implements View.OnClickListener{
             a = ip.lastIndexOf('.');
             if (a != -1) {
                 ip = ip.substring(0,a);
-                ipTxt.setText(ip + ".20");
+                ipTxt.setText(ip + ".253");
+                portTxt.setText("4444");
             }
         }
 
@@ -129,6 +132,7 @@ public class StartActivity extends Activity  implements View.OnClickListener{
         }
 
         try {
+            if(socket!=null)
             socket.close();
         } catch (IOException e) {
             Log.e("Closing socket", e.getMessage());
@@ -157,7 +161,7 @@ public class StartActivity extends Activity  implements View.OnClickListener{
                                     @Override
                                     public void run() {
                                         if(StartActivity.socket != null && StartActivity.socket.isConnected()){
-                                            DrawerActivity.receiveDataFromServer(getApplicationContext());
+                                            DrawerActivity.receiveDataFromServer();
                                            // isRunning = true;
 
                                         } else{

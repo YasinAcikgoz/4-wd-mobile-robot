@@ -15,6 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep com.eftimoff.androipathview
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.

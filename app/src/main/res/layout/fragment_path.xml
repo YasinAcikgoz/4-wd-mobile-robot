@@ -1,74 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:weightSum="9">
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_gravity="end"
-        android:weightSum="2">
+    <yacikgoz.com.undergraduateproject.PathView
+           xmlns:app="http://schemas.android.com/apk/res-auto"
+           android:id="@+id/pw"
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="8"
+           app:pathColor="@android:color/white"
+           app:pathWidth="3dp"/>
+       <!--com.eftimoff.androipathview.PathView
+           xmlns:app="http://schemas.android.com/apk/res-auto"
+           android:id="@+id/pw"
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="8"
+           app:pathColor="@android:color/white"
+           app:pathWidth="3dp"/>
+       <com.github.mikephil.charting.charts.LineChart
+           android:id="@+id/chart"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:layout_weight="8"/>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+           android:orientation="vertical"
+           android:layout_gravity="end"
+           android:weightSum="2">
 
-
-            <ImageButton
-                android:id="@+id/play_btn"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/play"
-                android:background="@null"
-                />
-            <ImageButton
-                android:id="@+id/pause_btn"
-                android:visibility="invisible"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/stop"
-                android:background="@null"
-                />
-        </FrameLayout>
-
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="end"
-            android:layout_weight="1">
+           <FrameLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1">
 
 
-            <ImageButton
-                android:id="@+id/forward_btn"
-                android:visibility="invisible"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/forward"
-                android:background="@null"
-                />
-            <ImageButton
-                android:id="@+id/reverse_btn"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/reverse"
-                android:background="@null"
-                />
-        </FrameLayout>
+               <ImageButton
+                   android:id="@+id/play_btn"
+                   android:layout_gravity="center"
+                   android:scaleType="fitXY"
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:src="@drawable/play"
+                   android:background="@null"
+                   />
+               <ImageButton
+                   android:id="@+id/pause_btn"
+                   android:visibility="invisible"
+                   android:layout_gravity="center"
+                   android:scaleType="fitXY"
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:src="@drawable/stop"
+                   android:background="@null"
+                   />
+           </FrameLayout>
 
 
-    </LinearLayout>
+           <FrameLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_gravity="end"
+               android:layout_weight="1">
+
+
+               <ImageButton
+                   android:id="@+id/forward_btn"
+                   android:visibility="invisible"
+                   android:layout_gravity="center"
+                   android:scaleType="fitXY"
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:src="@drawable/forward"
+                   android:background="@null"
+                   />
+               <ImageButton
+                   android:id="@+id/reverse_btn"
+                   android:layout_gravity="center"
+                   android:scaleType="fitXY"
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:src="@drawable/reverse"
+                   android:background="@null"
+                   />
+           </FrameLayout>
+
+
+       </LinearLayout-->
 
 </LinearLayout>
